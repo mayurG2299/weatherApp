@@ -1,4 +1,5 @@
 const express = require("express");
+const routes = require("./routes")
 
 const server = express();
 
@@ -16,5 +17,11 @@ const port = process.env.port || 3000
 server.use("/healthCheck", function (req, res) {
     res.send(`Server is working !!`)
 })
+
+// for handlig json format
+server.use(express.json());
+
+//routes --- env/route
+server.use(`/${NODE_ENV}`, routes);
 
 server.listen(port, () => console.log(`server is running on port ${port}`))
