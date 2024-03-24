@@ -1,14 +1,15 @@
 const { getWeatherInformation } = require("../../services/openWeatherServices")
-const { successResponse } = require("../../middleware/successHandler")
+
+const { getLocationByID } = require("../location/locationController")
 
 module.exports.getWeatherInformation = async (req, res) => {
     const { location_id } = req.params;
     console.log(location_id)
-    const body = req.body;
-
-    const lat = body?.lat ?? "44.34";
-    const lon = body?.lon ?? "10.99"
+    const locationDetails = await getLocationByID(req, res)
+    console.log("location details =>", locationDetails)
+    const lat = locationDetails?.latitude;
+    const lon = locationDetails?.longitude;
     const response = await getWeatherInformation(lat, lon)
 
-    return successResponse(res, "success", response)
+    return response
 }
