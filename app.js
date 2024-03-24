@@ -7,13 +7,16 @@ const NODE_ENV = process.env.NODE_ENV;
 require('dotenv').config({ path: path.resolve(__dirname, `./config/.${NODE_ENV}.env`) })
 
 const routes = require("./routes")
-const errorHandler = require("./src/middleware/errorHandler")
+const errorHandler = require("./src/middleware/errorHandler") // error handling middleware
+const { cacheMiddleware } = require("./src/middleware/cachingHandler") // error handling node cache
 
 // console.log(process.env.port)
 const port = process.env.port || 3000
 
 // for handlig json format
 server.use(express.json());
+
+server.use(cacheMiddleware); // caching middleware
 
 //routes --- env/route
 server.use(`/${NODE_ENV}`, routes);
@@ -28,6 +31,7 @@ server.all("*", (req, res, next) => {
     err.status = "failure";
     next(err)
 })
+
 server.use(errorHandler)
 
 server.listen(port, () => console.log(`server is running on port ${port}`))
