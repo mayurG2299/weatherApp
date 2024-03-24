@@ -10,14 +10,16 @@ const routes = require("./routes")
 const errorHandler = require("./src/middleware/errorHandler") // error handling middleware
 const { cacheMiddleware } = require("./src/middleware/cachingHandler") // error handling node cache
 const { limiter } = require("./src/middleware/rateLimiter") // error handling node cache
+const { logRequest } = require("./src/middleware/logResponse") // error handling node cache
 
 // console.log(process.env.port)
 const port = process.env.port || 3000
-
+const rootDirectory = path.resolve(__dirname);
 // for handlig json format
 server.use(express.json());
 server.use(limiter); // rate limiting middleware
 server.use(cacheMiddleware); // caching middleware
+server.use(logRequest(rootDirectory)); // request logging middleware
 
 //routes --- env/route
 server.use(`/${NODE_ENV}`, routes);
