@@ -1,6 +1,8 @@
 const Location = require('../../models/location');
+const { addLocationSchema, getLocationByIDSchema, deleteLocationBYIDSchema, updateLocationByIDSchema } = require("./locationValidator")
 
 module.exports.addLocation = async (req, res) => {
+    await addLocationSchema.validateAsync(req.body);
     const { name, latitude, longitude } = req.body;
     const location = await Location.create({ name, latitude, longitude });
     console.log(location)
