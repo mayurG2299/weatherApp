@@ -1,5 +1,5 @@
 const Location = require('../../models/location');
-const { addLocationSchema, getLocationByIDSchema, deleteLocationBYIDSchema, updateLocationByIDSchema } = require("./locationValidator")
+const { addLocationSchema } = require("./locationValidator")
 
 module.exports.addLocation = async (req, res) => {
     await addLocationSchema.validateAsync(req.body);

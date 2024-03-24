@@ -1,8 +1,9 @@
 const { getWeatherInformation } = require("../../services/openWeatherServices")
-
+const { getWeatherInformationSchema } = require("./weatherValidator")
 const { getLocationByID } = require("../location/locationController")
 
 module.exports.getWeatherInformation = async (req, res) => {
+    await getWeatherInformationSchema.validateAsync(req.params)
     const { location_id } = req.params;
     console.log(location_id)
     const locationDetails = await getLocationByID(req, res)
