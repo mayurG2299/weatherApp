@@ -8,7 +8,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 // .env file handling
 const path = require("path")
-require('dotenv').config({ path: path.resolve(__dirname, `./config/.${NODE_ENV}`) })
+require('dotenv').config({ path: path.resolve(__dirname, `./config/.${NODE_ENV}.env`) })
 
 // console.log(process.env.port)
 const port = process.env.port || 3000
