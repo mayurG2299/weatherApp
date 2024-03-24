@@ -1,5 +1,6 @@
 const express = require("express");
 const routes = require("./routes")
+const errorHandler = require("./src/middleware/errorHandler")
 
 const server = express();
 
@@ -12,16 +13,23 @@ require('dotenv').config({ path: path.resolve(__dirname, `./config/.${NODE_ENV}`
 // console.log(process.env.port)
 const port = process.env.port || 3000
 
-// console.log("port", port)
-
-server.use("/healthCheck", function (req, res) {
-    res.send(`Server is working !!`)
-})
 
 // for handlig json format
 server.use(express.json());
 
 //routes --- env/route
 server.use(`/${NODE_ENV}`, routes);
+
+
+server.use("/healthCheck", function (req, res) {
+    res.send({ status: "success", message: "Server is working !!" })
+})
+server.all("*", (req, res, next) => {
+    const err = new Error("Can Not Find the Endpoint !!")
+    err.statusCode = 404
+    err.status = "failure";
+    next(err)
+})
+server.use(errorHandler)
 
 server.listen(port, () => console.log(`server is running on port ${port}`))

@@ -3,7 +3,7 @@ const router = Router();
 
 const tryCatch = require("../../middleware/tryCatch.js")
 
-router.use("/healthCheck", (req, res) => res.send({ status: "success", message: "location service is working !!" }))
+router.use("/healthCheck", (req, res) => res.send({ status: "success", message: "Weather service is working !!" }))
 
 
 module.exports = router;
