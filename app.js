@@ -1,18 +1,16 @@
 const express = require("express");
+const server = express();
+const path = require("path")
+
+// .env file handling
+const NODE_ENV = process.env.NODE_ENV;
+require('dotenv').config({ path: path.resolve(__dirname, `./config/.${NODE_ENV}.env`) })
+
 const routes = require("./routes")
 const errorHandler = require("./src/middleware/errorHandler")
 
-const server = express();
-
-const NODE_ENV = process.env.NODE_ENV;
-
-// .env file handling
-const path = require("path")
-require('dotenv').config({ path: path.resolve(__dirname, `./config/.${NODE_ENV}.env`) })
-
 // console.log(process.env.port)
 const port = process.env.port || 3000
-
 
 // for handlig json format
 server.use(express.json());

@@ -1,5 +1,6 @@
 const { getWeatherInformation } = require("../../services/openWeatherServices")
 const { successResponse } = require("../../middleware/successHandler")
+
 module.exports.getWeatherInformation = async (req, res) => {
     const { location_id } = req.params;
     console.log(location_id)
